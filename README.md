@@ -4,7 +4,7 @@ This project is a quick-and-dirty method to "install" NetBeans 9.x on a Mac.  Cu
 
 I have been running it from the command line during the release candidate period but after putting it into the /Applications folder manually, I though a script might be nice.
 
-To run it, use the install.sh script. 
+To run it, use the install.sh script.  The user is prompted for the password because the script includes "sudo's" to gain permission to the /Applications folder.
 
 ```
 ./install.sh
