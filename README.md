@@ -14,7 +14,7 @@ There are two environment variables that may be set to change the defaults befor
 For example:
 
 ```
-export NETBEANS_VERSION=9.1
+export NETBEANS_VERSION=9.0
 export NETBEANS_URI=http://some.mirror.com/incubating-netbeans-java-9.0-bin.zip
 ./install.sh
 ```
