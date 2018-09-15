@@ -1,5 +1,7 @@
 #!/bin/sh
 
+BASEDIR=$(cd "$(dirname "$0")"; pwd)
+
 NETBEANS_PACKAGE=
 NETBEANS_VERSION=
 NETBEANS_PREFIX="."
@@ -39,7 +41,7 @@ NETBEANS_INSTALL_DIR="${NETBEANS_PREFIX}/bundle.tmp"
 
 mkdir -p "${NETBEANS_INSTALL_DIR}/Contents/MacOS"
 mkdir -p "${NETBEANS_INSTALL_DIR}/Contents/Resources"
-sed "s/NETBEANS_VERSION/${NETBEANS_VERSION}/g" Info.plist.template >"${NETBEANS_INSTALL_DIR}/Contents/Info.plist"
+sed "s/NETBEANS_VERSION/${NETBEANS_VERSION}/g" "${BASEDIR}/Info.plist.template" >"${NETBEANS_INSTALL_DIR}/Contents/Info.plist"
 unzip "${NETBEANS_PACKAGE}" -d "${NETBEANS_INSTALL_DIR}/Contents/Resources/"
 mv "${NETBEANS_INSTALL_DIR}/Contents/Resources/netbeans" "${NETBEANS_INSTALL_DIR}/Contents/Resources/NetBeans"
 (cd "${NETBEANS_INSTALL_DIR}/Contents/MacOS" && ln -s ../Resources/NetBeans/bin/netbeans netbeans)
