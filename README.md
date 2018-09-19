@@ -1,8 +1,8 @@
 # NetBeans MacOS Bundle
 
-This project is a quick-and-dirty method to "install" NetBeans 9.x on a Mac.  Currently, to my knowledge, the NetBeans sources and binaries can be downloaded but I have not happened across an installation method for Macs.
+When I originally put this little project together it was intended to be a tempoary quick way to get NetBeans installed on a Mac.  I did not anticipate the amount of feedback I have received (which is very much appreciated) and that has caused me to make a few changes along the way.
 
-I have been running it from the command line during the release candidate period but after putting it into the /Applications folder manually, I though a script might be nice.
+First off, you should either clone or download this project if you want to use the original install script.
 
 To run it, use the install.sh script.  The user is prompted for the password because the script includes "sudo's" to gain permission to the /Applications folder.
 
@@ -18,3 +18,17 @@ export NETBEANS_VERSION=9.0
 export NETBEANS_URI=http://some.mirror.com/incubating-netbeans-java-9.0-bin.zip
 ./install.sh
 ```
+
+Based on some feedback, some folks prefer not to install applications in the /Applications folder and others would prefer not to "sudo" to install an application.  Still others prefer not to download the entire project.  The install-custom.sh script provides the following options:
+
+* install in the directory of your choosing: --install-dir /Installation/directory
+* install from an alternate URI or local file --netbeans-uri http://some.apache.netbeans.mirror or file:///netbeans
+* install without sudo --non-root-install
+
+For example:
+
+```
+./install-custom.sh --non-root-install --install-dir ~/Applications
+```
+
+Happy coding
