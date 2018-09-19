@@ -21,7 +21,7 @@ export NETBEANS_URI=http://some.mirror.com/incubating-netbeans-java-9.0-bin.zip
 
 Based on some feedback, some folks prefer not to install applications in the /Applications folder and others would prefer not to "sudo" to install an application.  Still others prefer not to download the entire project.  I don't think folks were concerned about the size, they just wanted a way to download a single script instead of doing a git clone or an unzip after a download.
 
-After [downloading the custom script] (https://github.com/carljmosca/netbeans-macos-bundle/blob/master/install-custom.sh), the following options are provided:
+After [downloading the custom script](https://github.com/carljmosca/netbeans-macos-bundle/blob/master/install-custom.sh), the following options are provided:
 
 * install in the directory of your choosing: --install-dir /Installation/directory
 * install from an alternate URI or local file --netbeans-uri http://some.apache.netbeans.mirror or file:///netbeans
