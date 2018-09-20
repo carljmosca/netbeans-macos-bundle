@@ -10,6 +10,12 @@ To run it, use the install.sh script.  The user is prompted for the password bec
 ./install.sh
 ```
 
+Or paste this at a Terminal prompt.
+
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install.sh)"
+```
+
 There are two environment variables that may be set to change the defaults before running.
 For example:
 
