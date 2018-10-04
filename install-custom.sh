@@ -106,10 +106,10 @@ Contributor(s):
 <plist version="1.0">
   <dict>
     <key>CFBundleName</key>
-    <string>NetBeans "$NETBEANS_VERSION"</string>
+    <string>NetBeans ${NETBEANS_VERSION}</string>
 
     <key>CFBundleVersion</key>
-    <string>"$NETBEANS_VERSION"</string>
+    <string>${NETBEANS_VERSION}</string>
 
     <key>CFBundleExecutable</key>
     <string>netbeans</string>
@@ -118,10 +118,10 @@ Contributor(s):
     <string>APPL</string>
 
     <key>CFBundleShortVersionString</key>
-    <string>"$NETBEANS_VERSION"</string>
+    <string>${NETBEANS_VERSION}</string>
 
     <key>CFBundleIdentifier</key>
-    <string>org.netbeans.ide.baseide."$NETBEANS_VERSION"</string>
+    <string>org.netbeans.ide.baseide.${NETBEANS_VERSION}</string>
 
     <key>CFBundleSignature</key>
     <string>NETB</string>
@@ -156,9 +156,9 @@ Contributor(s):
 </plist>
 EOT
 
-curl $NETBEANS_URI > temp.zip
-${SUDO_COMMAND}unzip temp.zip -d "${INSTALL_DIR}/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/"
-${SUDO_COMMAND}mv "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/netbeans" "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans"
+curl ${NETBEANS_URI} > temp.zip
+${SUDO_COMMAND}unzip temp.zip -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" "${INSTALL_DIR}/NetBeans/NetBeans {$NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
 rm temp.zip
-${SUDO_COMMAND}ln -s "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/bin/netbeans" "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/MacOS/netbeans"
-${SUDO_COMMAND}cp "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/nb/netbeans.icns" "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/"
+${SUDO_COMMAND}ln -s "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/bin/netbeans" "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS/netbeans"
+${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/nb/netbeans.icns" "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
