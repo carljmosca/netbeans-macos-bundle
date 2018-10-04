@@ -28,6 +28,10 @@ show_help() {
     echo "        Please note that the default installation path requires root permissions."
     echo "        You need to specify a different path using --install-dir to change this."
     echo
+    echo "    --verbose"
+    echo "        Displays extra information during a run. Namely a more detailed progress "
+    echo "        from curl for the download and the list of extracted files from the archive."
+    echo
     echo "    -h | --help"
     echo "        Show this help."
 }
@@ -35,6 +39,8 @@ show_help() {
 # the trailing space is required
 SUDO_COMMAND='sudo '
 INSTALL_DIR='/Applications'
+PROGRESSBAR='--progress-bar'
+QUIETUNZIP='-q'
 
 while [[ $# -gt 0 ]]
 do
@@ -59,6 +65,11 @@ case $key in
     shift
     shift
     ;;    
+    --verbose)
+    unset PROGRESSBAR
+    unset QUIETUNZIP
+    shift
+    ;;
     -h | --help)
     show_help
     exit
@@ -197,10 +208,10 @@ ${SUDO_COMMAND}mv "${TMPFILE}" \
 TMPFILE=`mktemp`
 
 echo "Downloading ${NETBEANS_URI}..."
-curl -o "${TMPFILE}" "${NETBEANS_URI}"
+curl ${PROGRESSBAR} -o "${TMPFILE}" "${NETBEANS_URI}"
 
 echo "Unpacking Netbeans archive..."
-${SUDO_COMMAND}unzip "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+${SUDO_COMMAND}unzip ${QUIETUNZIP} "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
 
 echo "Finishing touches on NetBeans ${NETBEANS_VERSION}.app..."
 ${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" \
