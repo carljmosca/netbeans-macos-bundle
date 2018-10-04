@@ -61,7 +61,13 @@ done
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
 
-cat >> "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist" << EOT
+# while you can use " | sudo tee" to write to a file as a superuser,
+# the easier method is to just create a temporary file and 
+# move it using sudo (this also avoids the content being printed on stdout)
+
+TMPFILE=`mktemp`
+
+cat >> "${TMPFILE}" << EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
@@ -145,7 +151,7 @@ Contributor(s):
 		</array>
 	</dict>
     </array>
-    
+
     <key>NSHighResolutionCapable</key>
     <true/>
 
@@ -155,6 +161,9 @@ Contributor(s):
   </dict>
 </plist>
 EOT
+
+${SUDO_COMMAND}mv "${TMPFILE}" \
+                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist"
 
 curl ${NETBEANS_URI} > temp.zip
 ${SUDO_COMMAND}unzip temp.zip -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
