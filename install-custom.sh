@@ -106,6 +106,13 @@ case $key in
 esac
 done
 
+if [ ! -z "${SUDO_COMMAND}" ]
+then
+    echo "The script might ask for a password. This is because sudo is used to"
+    echo "gain root permissions to create the software package"
+    echo
+fi
+
 # check if target directory already exists and allow the user to delete
 # it by using the --force | -f command line option
 if [ -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/" ]; then
