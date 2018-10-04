@@ -32,6 +32,10 @@ show_help() {
     echo "        Displays extra information during a run. Namely a more detailed progress "
     echo "        from curl for the download and the list of extracted files from the archive."
     echo
+    echo "    -f | --force"
+    echo "        Allows the script to remove an existing package before installing. Otherwise"
+    echo "        the script will refuse to install the package if it already exists."
+    echo
     echo "    -h | --help"
     echo "        Show this help."
 }
@@ -41,6 +45,7 @@ SUDO_COMMAND='sudo '
 INSTALL_DIR='/Applications'
 PROGRESSBAR='--progress-bar'
 QUIETUNZIP='-q'
+FORCE=0
 
 while [[ $# -gt 0 ]]
 do
@@ -70,6 +75,10 @@ case $key in
     unset QUIETUNZIP
     shift
     ;;
+    -f|--force)
+    FORCE=1
+    shift
+    ;;
     -h | --help)
     show_help
     exit
@@ -96,6 +105,31 @@ case $key in
     ;;
 esac
 done
+
+# check if target directory already exists and allow the user to delete
+# it by using the --force | -f command line option
+if [ -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/" ]; then
+
+    if [ "${FORCE}" -eq 0 ]
+    then
+        echo "Refusing to overwrite the existing app ${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app."
+        echo "Please delete the old app first before trying to create a new one"
+        echo "or specify -f|--force as an option to have the script delete it for you."
+        exit 1
+    else
+        echo "Deleting ${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app..."
+
+        read -r -p "Are you sure? [y/N] " response
+        case "${response}" in [yY][eE][sS]|[yY])
+            ${SUDO_COMMAND}rm -r "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/"
+            ;;
+        *)
+            echo "Exiting without creating the app."
+            exit 0
+            ;;
+        esac
+    fi
+fi
 
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
