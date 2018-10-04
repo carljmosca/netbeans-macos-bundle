@@ -1,12 +1,14 @@
 #!/bin/bash
 
+# these need to be updated for new versions.
+NETBEANS_VERSION='9'
+NETBEANS_URI="http://apache.mirrors.pair.com/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip"
+
 show_help() {
     echo "./install-custom.sh [--install-dir /Applications] [--netbeans-uri http://some.apache.netbeans.mirror] [--non-root-install]"
 }
 
 INSTALL_DIR='/Applications'
-NETBEANS_VERSION='9'
-NETBEANS_URI="http://apache.mirrors.pair.com/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip"
 SUDO_COMMAND='sudo'
 
 while [[ $# -gt 0 ]]
