@@ -138,6 +138,9 @@ if [ -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/" ]; then
     fi
 fi
 
+# TODO: There should be a check if we can write to the target folder
+# but I have no idea how to do that at the moment ;)
+
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
 
