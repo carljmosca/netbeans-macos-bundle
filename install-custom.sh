@@ -5,7 +5,29 @@ NETBEANS_VERSION='9'
 NETBEANS_URI="http://apache.mirrors.pair.com/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip"
 
 show_help() {
-    echo "./install-custom.sh [--install-dir /Applications] [--netbeans-uri http://some.apache.netbeans.mirror] [--non-root-install]"
+    echo "./install-custom.sh [options]"
+    echo
+    echo "Available Options:"
+    echo "    -d | --install-dir <path>"
+    echo "        (Default: /Applications):"
+    echo "        Change the directory where the app is going to be installed in."
+    echo
+    echo "     -v|--netbeans-version <version>"
+    echo "         (Default: ${NETBEANS_VERSION})"
+    echo "         Creates an application with the corresponding version number."
+    echo "         Please note that this does not change the downloaded version,"
+    echo "         but just affects the created package name."
+    echo
+    echo "     -u | --netbeans-uri <URI>"
+    echo "         (Default: ${NETBEANS_URI})"
+    echo "         Change the download URI from where to get the Netbeans package."
+    echo "         You can use a mirror closer to you to get higher download speeds."
+    echo
+    echo "    -n | --non-root-install"
+    echo "        Do not install as root using sudo."
+    echo "        Please note that the default installation path requires root permissions."
+    echo "        You need to specify a different path using --install-dir to change this."
+    echo
 }
 
 # the trailing space is required
