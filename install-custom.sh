@@ -165,9 +165,20 @@ EOT
 ${SUDO_COMMAND}mv "${TMPFILE}" \
                   "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist"
 
-curl ${NETBEANS_URI} > temp.zip
-${SUDO_COMMAND}unzip temp.zip -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+# don't use temp.zip, but a file created with mktmp
+TMPFILE=`mktemp`
+
+echo "Downloading ${NETBEANS_URI}..."
+curl -o "${TMPFILE}" "${NETBEANS_URI}"
+
+echo "Unpacking Netbeans archive..."
+${SUDO_COMMAND}unzip "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+
 ${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
-rm temp.zip
 ${SUDO_COMMAND}ln -s "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/bin/netbeans" "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS/netbeans"
 ${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/nb/netbeans.icns" "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+
+echo "Cleaning up..."
+rm "${TMPFILE}"
+
+echo "All done."
