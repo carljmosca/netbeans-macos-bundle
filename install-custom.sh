@@ -8,8 +8,9 @@ show_help() {
     echo "./install-custom.sh [--install-dir /Applications] [--netbeans-uri http://some.apache.netbeans.mirror] [--non-root-install]"
 }
 
+# the trailing space is required
+SUDO_COMMAND='sudo '
 INSTALL_DIR='/Applications'
-SUDO_COMMAND='sudo'
 
 while [[ $# -gt 0 ]]
 do
@@ -57,8 +58,8 @@ case $key in
 esac
 done
 
-eval "${SUDO_COMMAND}" mkdir -p "\"${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS\""
-eval "${SUDO_COMMAND}" mkdir -p "\"${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources\""
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
 
 cat >> "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist" << EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -156,8 +157,8 @@ Contributor(s):
 EOT
 
 curl $NETBEANS_URI > temp.zip
-eval "${SUDO_COMMAND+set} unzip temp.zip -d \"${INSTALL_DIR}/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/\""
-eval "${SUDO_COMMAND+set} mv \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/netbeans\" \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans\""
+${SUDO_COMMAND}unzip temp.zip -d "${INSTALL_DIR}/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/"
+${SUDO_COMMAND}mv "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/netbeans" "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans"
 rm temp.zip
-eval "${SUDO_COMMAND+set} ln -s \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/bin/netbeans\" \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/MacOS/netbeans\""
-eval "${SUDO_COMMAND+set} cp \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/nb/netbeans.icns\" \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/\""
+${SUDO_COMMAND}ln -s "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/bin/netbeans" "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/MacOS/netbeans"
+${SUDO_COMMAND}cp "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/nb/netbeans.icns" "$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/"
