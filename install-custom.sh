@@ -28,6 +28,8 @@ show_help() {
     echo "        Please note that the default installation path requires root permissions."
     echo "        You need to specify a different path using --install-dir to change this."
     echo
+    echo "    -h | --help"
+    echo "        Show this help."
 }
 
 # the trailing space is required
@@ -57,6 +59,10 @@ case $key in
     shift
     shift
     ;;    
+    -h | --help)
+    show_help
+    exit
+    ;;
     -*)
     echo "Unknown option: $1"
     show_help
