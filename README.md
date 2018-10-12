@@ -27,9 +27,14 @@ Based on some feedback, some folks prefer not to install applications in the /Ap
 
 After [downloading the custom script](https://github.com/carljmosca/netbeans-macos-bundle/blob/master/install-custom.sh), the following options are provided:
 
-* install in the directory of your choosing: --install-dir /Installation/directory
+* install in the directory of your choosing: -d | --install-dir /Installation/directory
+* install NetBeans version of your choosing: -v | --netbeans-version <version>
+* install NetBeans from an alternate UIR: -u | --netbeans-uri <URI>
+* display extra information: --verbose
+* remove existing package before install: -f | --force
 * install from an alternate URI or local file --netbeans-uri http://some.apache.netbeans.mirror or file:///netbeans
-* install without sudo --non-root-install
+* install without sudo: -n | --non-root-install
+* show help -h | --help
 
 For example:
 
