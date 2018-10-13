@@ -23,7 +23,7 @@ show_help() {
     echo "         Change the download URI from where to get the Netbeans package."
     echo "         You can use a mirror closer to you to get higher download speeds."
     echo
-    echo "    -n | --non-root-install"
+    echo "    -n | --non-root-install"
     echo "        Do not install as root using sudo."
     echo "        Please note that the default installation path requires root permissions."
     echo "        You need to specify a different path using --install-dir to change this."
@@ -36,7 +36,7 @@ show_help() {
     echo "        Allows the script to remove an existing package before installing. Otherwise"
     echo "        the script will refuse to install the package if it already exists."
     echo
-    echo "    -h | --help"
+    echo "    -h | --help"
     echo "        Show this help."
 }
 
