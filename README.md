@@ -2,9 +2,7 @@
 
 When I originally put this little project together it was intended to be a tempoary quick way to get NetBeans installed on a Mac.  I did not anticipate the amount of feedback I have received (which is very much appreciated) and that has caused me to make a few changes along the way.
 
-
 Thank you to Geertjan Wielenga for putting this [video](https://www.youtube.com/watch?v=I8gdC7BBtbs) together.  He has, to me, been a very positive face to NetBeans and the Java community for a long time.
-
 
 First off, you should either clone or download this project if you want to use the original install script.
 
@@ -40,12 +38,6 @@ For example:
 
 ```
 ./install-custom.sh --non-root-install --install-dir ~/Applications
-```
-
-The fast way is paste this at a Terminal prompt.
-
-```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install-custom.sh)"
 ```
 
 Happy coding
