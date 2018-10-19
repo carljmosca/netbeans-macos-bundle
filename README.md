@@ -45,7 +45,7 @@ For example:
 The fast way is paste this at a Terminal prompt.
 
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install-custom.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install-custom.sh)"
 ```
 
 Happy coding
