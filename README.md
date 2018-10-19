@@ -29,12 +29,13 @@ After [downloading the custom script](https://github.com/carljmosca/netbeans-mac
 
 * install in the directory of your choosing: -d | --install-dir /Installation/directory
 * install NetBeans version of your choosing: -v | --netbeans-version <version>
-* install NetBeans from an alternate UIR: -u | --netbeans-uri <URI>
+* install NetBeans from an alternate URI: -u | --netbeans-uri <URI> 
 * display extra information: --verbose
 * remove existing package before install: -f | --force
-* install from an alternate URI or local file --netbeans-uri http://some.apache.netbeans.mirror or file:///netbeans
 * install without sudo: -n | --non-root-install
 * show help -h | --help
+
+Tip: You can use `file:///filename.zip` to specify local file as a parameter for -u | --netbeans-uri.
 
 For example:
 
@@ -45,7 +46,7 @@ For example:
 The fast way is paste this at a Terminal prompt.
 
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install-custom.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install-custom.sh)"
 ```
 
 Happy coding
