@@ -1,13 +1,51 @@
 #!/bin/bash
 
-show_help() {
-    echo "./install-custom.sh [--install-dir /Applications] [--netbeans-uri http://some.apache.netbeans.mirror] [--non-root-install]"
-}
-
-INSTALL_DIR='/Applications'
+# these need to be updated for new versions.
 NETBEANS_VERSION='9'
 NETBEANS_URI="http://apache.mirrors.pair.com/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip"
+
+show_help() {
+    echo "./install-custom.sh [options]"
+    echo
+    echo "Available Options:"
+    echo "    -d | --install-dir <path>"
+    echo "        (Default: /Applications):"
+    echo "        Change the directory where the app is going to be installed in."
+    echo
+    echo "     -v|--netbeans-version <version>"
+    echo "         (Default: ${NETBEANS_VERSION})"
+    echo "         Creates an application with the corresponding version number."
+    echo "         Please note that this does not change the downloaded version,"
+    echo "         but just affects the created package name."
+    echo
+    echo "     -u | --netbeans-uri <URI>"
+    echo "         (Default: ${NETBEANS_URI})"
+    echo "         Change the download URI from where to get the Netbeans package."
+    echo "         You can use a mirror closer to you to get higher download speeds."
+    echo
+    echo "    -n | --non-root-install"
+    echo "        Do not install as root using sudo."
+    echo "        Please note that the default installation path requires root permissions."
+    echo "        You need to specify a different path using --install-dir to change this."
+    echo
+    echo "    --verbose"
+    echo "        Displays extra information during a run. Namely a more detailed progress "
+    echo "        from curl for the download and the list of extracted files from the archive."
+    echo
+    echo "    -f | --force"
+    echo "        Allows the script to remove an existing package before installing. Otherwise"
+    echo "        the script will refuse to install the package if it already exists."
+    echo
+    echo "    -h | --help"
+    echo "        Show this help."
+}
+
+# the trailing space is required
 SUDO_COMMAND='sudo '
+INSTALL_DIR='/Applications'
+PROGRESSBAR='--progress-bar'
+QUIETUNZIP='-q'
+FORCE=0
 
 while [[ $# -gt 0 ]]
 do
@@ -32,6 +70,19 @@ case $key in
     shift
     shift
     ;;    
+    --verbose)
+    unset PROGRESSBAR
+    unset QUIETUNZIP
+    shift
+    ;;
+    -f|--force)
+    FORCE=1
+    shift
+    ;;
+    -h | --help)
+    show_help
+    exit
+    ;;
     -*)
     echo "Unknown option: $1"
     show_help
@@ -55,10 +106,51 @@ case $key in
 esac
 done
 
-eval "${SUDO_COMMAND}" mkdir -p "\"${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS\""
-eval "${SUDO_COMMAND}" mkdir -p "\"${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources\""
+if [ ! -z "${SUDO_COMMAND}" ]
+then
+    echo "The script might ask for a password. This is because sudo is used to"
+    echo "gain root permissions to create the software package"
+    echo
+fi
 
-cat >> "$TMPDIR/Info.plist" << EOT
+# check if target directory already exists and allow the user to delete
+# it by using the --force | -f command line option
+if [ -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/" ]; then
+
+    if [ "${FORCE}" -eq 0 ]
+    then
+        echo "Refusing to overwrite the existing app ${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app."
+        echo "Please delete the old app first before trying to create a new one"
+        echo "or specify -f|--force as an option to have the script delete it for you."
+        exit 1
+    else
+        echo "Deleting ${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app..."
+
+        read -r -p "Are you sure? [y/N] " response
+        case "${response}" in [yY][eE][sS]|[yY])
+            ${SUDO_COMMAND}rm -r "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/"
+            ;;
+        *)
+            echo "Exiting without creating the app."
+            exit 0
+            ;;
+        esac
+    fi
+fi
+
+# TODO: There should be a check if we can write to the target folder
+# but I have no idea how to do that at the moment ;)
+
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
+
+# while you can use " | sudo tee" to write to a file as a superuser,
+# the easier method is to just create a temporary file and 
+# move it using sudo (this also avoids the content being printed on stdout)
+
+TMPFILE=`mktemp`
+
+cat >> "${TMPFILE}" << EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
@@ -103,10 +195,10 @@ Contributor(s):
 <plist version="1.0">
   <dict>
     <key>CFBundleName</key>
-    <string>NetBeans $NETBEANS_VERSION</string>
+    <string>NetBeans ${NETBEANS_VERSION}</string>
 
     <key>CFBundleVersion</key>
-    <string>$NETBEANS_VERSION</string>
+    <string>${NETBEANS_VERSION}</string>
 
     <key>CFBundleExecutable</key>
     <string>netbeans</string>
@@ -115,10 +207,10 @@ Contributor(s):
     <string>APPL</string>
 
     <key>CFBundleShortVersionString</key>
-    <string>$NETBEANS_VERSION</string>
+    <string>${NETBEANS_VERSION}</string>
 
     <key>CFBundleIdentifier</key>
-    <string>org.netbeans.ide.baseide.$NETBEANS_VERSION</string>
+    <string>org.netbeans.ide.baseide.${NETBEANS_VERSION}</string>
 
     <key>CFBundleSignature</key>
     <string>NETB</string>
@@ -142,7 +234,7 @@ Contributor(s):
 		</array>
 	</dict>
     </array>
-    
+
     <key>NSHighResolutionCapable</key>
     <true/>
 
@@ -153,11 +245,29 @@ Contributor(s):
 </plist>
 EOT
 
-eval "$SUDO_COMMAND mv $TMPDIR/Info.plist \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Info.plist\""
+${SUDO_COMMAND}mv "${TMPFILE}" \
+                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist"
 
-curl $NETBEANS_URI > $TMPDIR/temp.zip
-eval "$SUDO_COMMAND unzip $TMPDIR/temp.zip -d \"${INSTALL_DIR}/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/\""
-eval "$SUDO_COMMAND mv \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/netbeans\" \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans\""
-rm $TMPDIR/temp.zip
-eval "$SUDO_COMMAND ln -s \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/bin/netbeans\" \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/MacOS/netbeans\""
-eval "$SUDO_COMMAND cp \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/NetBeans/nb/netbeans.icns\" \"$INSTALL_DIR/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/Resources/\""
+# don't use temp.zip, but a file created with mktmp
+TMPFILE=`mktemp`
+
+echo "Downloading ${NETBEANS_URI}..."
+curl ${PROGRESSBAR} -o "${TMPFILE}" "${NETBEANS_URI}"
+
+echo "Unpacking Netbeans archive..."
+${SUDO_COMMAND}unzip ${QUIETUNZIP} "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+
+echo "Finishing touches on NetBeans ${NETBEANS_VERSION}.app..."
+${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" \
+                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
+
+${SUDO_COMMAND}ln -s "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/bin/netbeans" \
+                     "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS/netbeans"
+
+${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/nb/netbeans.icns" \
+                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+
+echo "Cleaning up..."
+rm "${TMPFILE}"
+
+echo "All done."
