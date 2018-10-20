@@ -290,4 +290,8 @@ ${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Cont
 echo "Cleaning up..."
 rm "${TMPFILE}"
 
+if ! $(/usr/libexec/java_home &> /dev/null); then
+    echo "Please note that you need to install java to run Netbeans."
+fi
+
 echo "All done."
