@@ -1,7 +1,7 @@
 #!/bin/bash
 
-NETBEANS_VERSION=${NETBEANS_VERSION:-9}
-NETBEANS_URI=${NETBEANS_URI:-http://apache.mirrors.pair.com/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip}
+NETBEANS_VERSION=${NETBEANS_VERSION:-10}
+NETBEANS_URI=${NETBEANS_URI:-http://apache.osuosl.org/incubator/netbeans/incubating-netbeans/incubating-10.0/incubating-netbeans-10.0-bin.zip}
 
 curl $NETBEANS_URI > temp.zip
 sudo mkdir -p "/Applications/NetBeans/NetBeans $NETBEANS_VERSION.app/Contents/MacOS"
