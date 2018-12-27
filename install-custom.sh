@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # these need to be updated for new versions.
-NETBEANS_VERSION='9'
-NETBEANS_URI="http://apache.mirrors.pair.com/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip"
-NETBEANS_SHA1_URI="https://www-eu.apache.org/dist/incubator/netbeans/incubating-netbeans-java/incubating-9.0/"`basename "${NETBEANS_URI}"`".sha1"
+NETBEANS_VERSION='10'
+NETBEANS_URI="http://apache.osuosl.org/incubator/netbeans/incubating-netbeans/incubating-10.0/incubating-netbeans-10.0-bin.zip"
+NETBEANS_SHA512_URI="https://www-us.apache.org/dist/incubator/netbeans/incubating-netbeans/incubating-10.0/"`basename "${NETBEANS_URI}"`".sha512"
 
 show_help() {
     echo "./install-custom.sh [options]"
@@ -71,7 +71,7 @@ case $key in
     NETBEANS_URI="$2"
     echo "Disabling the integrity check because -u | --netbeans-uri has been used."
     echo
-    NETBEANS_SHA1_URI=""
+    NETBEANS_SHA512_URI=""
     shift
     shift
     ;;    
@@ -259,14 +259,14 @@ TMPFILE=`mktemp`
 echo "Downloading ${NETBEANS_URI}..."
 curl ${PROGRESSBAR} -o "${TMPFILE}" "${NETBEANS_URI}"
 
-# if $NETBEANS_SHA1_URI is set, verify the integrity
-if [ ! -z "${NETBEANS_SHA1_URI}" ]; then
-    EXPECTED_SHA1=`curl -fsSL "${NETBEANS_SHA1_URI}" |cut -d " " -f 1`
-    REAL_SHA1=`shasum -a 1 "${TMPFILE}" |cut -d " " -f 1`
-    echo "Expected SHA1 checksum: ${EXPECTED_SHA1}"
-    echo "File SHA1 checksum:     ${REAL_SHA1}"
+# if $NETBEANS_SHA512_URI is set, verify the integrity
+if [ ! -z "${NETBEANS_SHA512_URI}" ]; then
+    EXPECTED_SHA512=`curl -fsSL "${NETBEANS_SHA512_URI}" |cut -d " " -f 1`
+    REAL_SHA512=`shasum -a 512 "${TMPFILE}" |cut -d " " -f 1`
+    echo "Expected SHA512 checksum: ${EXPECTED_SHA512}"
+    echo "File SHA512 checksum:     ${REAL_SHA512}"
 
-    if [ "${EXPECTED_SHA1}" != "${REAL_SHA1}" ]; then
+    if [ "${EXPECTED_SHA512}" != "${REAL_SHA512}" ]; then
         echo "Cleaning up..."
         rm "${TMPFILE}"
         echo "Checksum mismatch! Exiting."
