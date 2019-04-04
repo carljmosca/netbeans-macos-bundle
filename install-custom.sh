@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # these need to be updated for new versions.
-NETBEANS_VERSION='10'
-NETBEANS_URI="http://apache.osuosl.org/incubator/netbeans/incubating-netbeans/incubating-10.0/incubating-netbeans-10.0-bin.zip"
-NETBEANS_SHA512_URI="https://www-us.apache.org/dist/incubator/netbeans/incubating-netbeans/incubating-10.0/"`basename "${NETBEANS_URI}"`".sha512"
+NETBEANS_VERSION='11'
+NETBEANS_URI="http://mirrors.ocf.berkeley.edu/apache/incubator/netbeans/incubating-netbeans/incubating-11.0/incubating-netbeans-11.0-bin.zip"
+NETBEANS_SHA512_URI="https://www-us.apache.org/dist/incubator/netbeans/incubating-netbeans/incubating-11.0/"`basename "${NETBEANS_URI}"`".sha512"
 
 show_help() {
     echo "./install-custom.sh [options]"
