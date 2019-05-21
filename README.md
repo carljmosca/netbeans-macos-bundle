@@ -26,7 +26,7 @@ export NETBEANS_URI=http://apache.osuosl.org/incubator/netbeans/incubating-netbe
 
 Based on some feedback, some folks prefer not to install applications in the /Applications folder and others would prefer not to "sudo" to install an application.  Still others prefer not to download the entire project.  I don't think folks were concerned about the size, they just wanted a way to download a single script instead of doing a git clone or an unzip after a download.
 
-After [downloading the custom script](https://github.com/carljmosca/netbeans-macos-bundle/blob/master/install-custom.sh), the following options are provided:
+Therefore the following options are provided:
 
 * install in the directory of your choosing: -d | --install-dir /Installation/directory
 * install NetBeans version of your choosing: -v | --netbeans-version <version>
@@ -41,13 +41,13 @@ Tip: You can use `file:///filename.zip` to specify local file as a parameter for
 For example:
 
 ```
-./install-custom.sh --non-root-install --install-dir ~/Applications
+./install.sh --non-root-install --install-dir ~/Applications
 ```
 
 The fast way is paste this at a Terminal prompt.
 
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install-custom.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/carljmosca/netbeans-macos-bundle/master/install.sh)"
 ```
 
 Happy coding
