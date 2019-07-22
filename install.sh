@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # these need to be updated for new versions.
-NETBEANS_VERSION='11'
-NETBEANS_URI="http://mirrors.ocf.berkeley.edu/apache/incubator/netbeans/incubating-netbeans/incubating-11.0/incubating-netbeans-11.0-bin.zip"
-NETBEANS_SHA512_URI="https://www-us.apache.org/dist/incubator/netbeans/incubating-netbeans/incubating-11.0/"`basename "${NETBEANS_URI}"`".sha512"
+NETBEANS_VERSION='11.1'
+NETBEANS_URI="http://ftp.wayne.edu/apache/netbeans/netbeans/11.1/netbeans-11.1-bin.zip"
+NETBEANS_SHA512_URI="https://www-us.apache.org/dist/netbeans/netbeans/11.1/"`basename "${NETBEANS_URI}"`".sha512"
 
 show_help() {
     echo "./install-custom.sh [options]"
@@ -269,7 +269,8 @@ if [ ! -z "${NETBEANS_SHA512_URI}" ]; then
     if [ "${EXPECTED_SHA512}" != "${REAL_SHA512}" ]; then
         echo "Cleaning up..."
         rm "${TMPFILE}"
-        echo "Checksum mismatch! Exiting."
+        echo "Checksum mismatch (using URI below)! Exiting."
+        echo "$NETBEANS_SHA512_URI"
         exit
     fi
 fi
