@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # these need to be updated for new versions.
-NETBEANS_VERSION='11.3'
+NETBEANS_VERSION='12.0'
 NETBEANS_URI="http://apache.mirrors.hoobly.com/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip"
 NETBEANS_SHA512_URI="https://www-us.apache.org/dist/netbeans/netbeans/${NETBEANS_VERSION}/"`basename "${NETBEANS_URI}"`".sha512"
 
