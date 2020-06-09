@@ -120,20 +120,20 @@ fi
 
 # check if target directory already exists and allow the user to delete
 # it by using the --force | -f command line option
-if [ -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/" ]; then
+if [ -d "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/" ]; then
 
     if [ "${FORCE}" -eq 0 ]
     then
-        echo "Refusing to overwrite the existing app ${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app."
+        echo "Refusing to overwrite the existing app ${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app."
         echo "Please delete the old app first before trying to create a new one"
         echo "or specify -f|--force as an option to have the script delete it for you."
         exit 1
     else
-        echo "Deleting ${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app..."
+        echo "Deleting ${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app..."
 
         read -r -p "Are you sure? [y/N] " response
         case "${response}" in [yY][eE][sS]|[yY])
-            ${SUDO_COMMAND}rm -r "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/"
+            ${SUDO_COMMAND}rm -r "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/"
             ;;
         *)
             echo "Exiting without creating the app."
@@ -146,8 +146,8 @@ fi
 # TODO: There should be a check if we can write to the target folder
 # but I have no idea how to do that at the moment ;)
 
-${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
-${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
 
 # while you can use " | sudo tee" to write to a file as a superuser,
 # the easier method is to just create a temporary file and 
@@ -251,7 +251,7 @@ Contributor(s):
 EOT
 
 ${SUDO_COMMAND}mv "${TMPFILE}" \
-                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist"
+                  "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Info.plist"
 
 # don't use temp.zip, but a file created with mktmp
 TMPFILE=`mktemp`
@@ -276,17 +276,17 @@ if [ ! -z "${NETBEANS_SHA512_URI}" ]; then
 fi
 
 echo "Unpacking Netbeans archive..."
-${SUDO_COMMAND}unzip ${QUIETUNZIP} "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+${SUDO_COMMAND}unzip ${QUIETUNZIP} "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
 
 echo "Finishing touches on NetBeans ${NETBEANS_VERSION}.app..."
-${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" \
-                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
+${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" \
+                  "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
 
-cd "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
+cd "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
 ${SUDO_COMMAND}ln -s ../Resources/NetBeans/bin/netbeans
 cd
-${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/nb/netbeans.icns" \
-                  "${INSTALL_DIR}/NetBeans/NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/nb/netbeans.icns" \
+                  "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
 
 echo "Cleaning up..."
 rm "${TMPFILE}"
