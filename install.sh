@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # these need to be updated for new versions.
-NETBEANS_VERSION='12.4'
-NETBEANS_URI="http://mirrors.advancedhosters.com/apache/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip"
-NETBEANS_SHA512_URI="https://www-us.apache.org/dist/netbeans/netbeans/${NETBEANS_VERSION}/"`basename "${NETBEANS_URI}"`".sha512"
+NETBEANS_VERSION='13'
+NETBEANS_URI="https://dlcdn.apache.org/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip"
+NETBEANS_SHA512_URI="https://downloads.apache.org/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip.sha512"
 
 show_help() {
     echo "./install-custom.sh [options]"
