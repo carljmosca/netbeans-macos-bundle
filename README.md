@@ -1,4 +1,4 @@
-# NetBeans MacOS Bundle
+# NetBeans macOS Bundle
 
 When I originally put this little project together it was intended to be a tempoary quick way to get NetBeans installed on a Mac.  I did not anticipate the amount of feedback I have received (which is very much appreciated) and that has caused me to make a few changes along the way.
 
@@ -19,7 +19,7 @@ There are two environment variables that may be set to change the defaults befor
 For example:
 
 ```
-export NETBEANS_VERSION=10
+export NETBEANS_VERSION=13
 export NETBEANS_URI=http://apache.osuosl.org/incubator/netbeans/incubating-netbeans/incubating-10.0/incubating-netbeans-10.0-bin.zip
 ./install.sh
 ```
