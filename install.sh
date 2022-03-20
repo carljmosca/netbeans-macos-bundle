@@ -4,6 +4,7 @@
 NETBEANS_VERSION='13'
 NETBEANS_URI="https://dlcdn.apache.org/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip"
 NETBEANS_SHA512_URI="https://downloads.apache.org/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip.sha512"
+NETBEANS_LAUNCHER_URI="https://github.com/carljmosca/netbeans-macos-bundle/releases/download/v${NETBEANS_VERSION}/NetBeansLauncher"
 
 show_help() {
     echo "./install-custom.sh [options]"
@@ -147,7 +148,7 @@ fi
 # but I have no idea how to do that at the moment ;)
 
 ${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
-${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources"
+${SUDO_COMMAND}mkdir -p "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
 
 # while you can use " | sudo tee" to write to a file as a superuser,
 # the easier method is to just create a temporary file and 
@@ -276,17 +277,21 @@ if [ ! -z "${NETBEANS_SHA512_URI}" ]; then
 fi
 
 echo "Unpacking Netbeans archive..."
-${SUDO_COMMAND}unzip ${QUIETUNZIP} "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+${SUDO_COMMAND}unzip ${QUIETUNZIP} "${TMPFILE}" -d "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
 
 echo "Finishing touches on NetBeans ${NETBEANS_VERSION}.app..."
-${SUDO_COMMAND}mv "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/netbeans" \
-                  "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans"
 
-cd "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS"
-${SUDO_COMMAND}ln -s ../Resources/NetBeans/bin/netbeans
 cd
-${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/nb/netbeans.icns" \
+${SUDO_COMMAND}cp "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/NetBeans/netbeans/nb/netbeans.icns" \
                   "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/Resources/"
+
+TMPLAUNCHERFILE=`mktemp`
+
+echo "Downloading ${NETBEANS_LAUNCHER_URI}..."
+curl ${PROGRESSBAR} -L -o "${TMPLAUNCHERFILE}" "${NETBEANS_LAUNCHER_URI}"
+
+${SUDO_COMMAND}mv "${TMPLAUNCHERFILE}" "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS/netbeans"
+${SUDO_COMMAND}chmod +x "${INSTALL_DIR}/NetBeans/Apache NetBeans ${NETBEANS_VERSION}.app/Contents/MacOS/netbeans"
 
 echo "Cleaning up..."
 rm "${TMPFILE}"
