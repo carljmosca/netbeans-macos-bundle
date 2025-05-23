@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # these need to be updated for new versions.
-NETBEANS_VERSION='13'
+NETBEANS_VERSION='26'
 NETBEANS_URI="https://dlcdn.apache.org/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip"
 NETBEANS_SHA512_URI="https://downloads.apache.org/netbeans/netbeans/${NETBEANS_VERSION}/netbeans-${NETBEANS_VERSION}-bin.zip.sha512"
 
